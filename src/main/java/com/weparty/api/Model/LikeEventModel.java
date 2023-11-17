@@ -5,8 +5,8 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "Like")
-public class LikeModel {
+@Table(name = "LikeEvent")
+public class LikeEventModel {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "like_id", nullable = false)

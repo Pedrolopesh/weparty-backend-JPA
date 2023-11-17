@@ -1,6 +1,6 @@
 package com.weparty.api.Controller;
 
-import com.weparty.api.Model.LikeModel;
+import com.weparty.api.Model.LikeEventModel;
 import com.weparty.api.Service.LikeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,12 +17,12 @@ public class LikeController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public LikeModel addLike(@RequestBody LikeModel likeModel) {
-        return (LikeModel) likeService.store(likeModel);
+    public LikeEventModel addLike(@RequestBody LikeEventModel likeEventModel) {
+        return (LikeEventModel) likeService.store(likeEventModel);
     }
 
     @GetMapping
-    public List<LikeModel> listAll() {
+    public List<LikeEventModel> listAll() {
         return likeService.index();
     }
 }
