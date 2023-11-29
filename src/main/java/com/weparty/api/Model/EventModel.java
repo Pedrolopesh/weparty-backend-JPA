@@ -21,6 +21,9 @@ public class EventModel {
     @Column(name="description")
     private String description;
 
+    @Column(name="eventImage")
+    private String eventImage;
+
     @Column(name="startDate")
     private String startDate;
 

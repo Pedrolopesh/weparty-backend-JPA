@@ -17,6 +17,9 @@ public class UserSystemModel {
     @Column(name="name")
     private String name;
 
+    @Column(name="image")
+    private String image;
+
     @Column(name="email")
     private String email;
 

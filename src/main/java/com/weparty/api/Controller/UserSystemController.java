@@ -1,6 +1,7 @@
 package com.weparty.api.Controller;
 
 import com.weparty.api.Model.EventModel;
+import com.weparty.api.Model.UserResponseModel;
 import com.weparty.api.Model.UserSystemModel;
 import com.weparty.api.Service.UserSystemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +10,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/user")
+@CrossOrigin
 public class UserSystemController {
 
     @Autowired
@@ -33,6 +37,15 @@ public class UserSystemController {
     public ResponseEntity<Object> updateEvent(@PathVariable Long id, @RequestBody UserSystemModel updatedUser) {
         Object result = userSystemService.update(id, updatedUser);
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PostMapping("/authenticate")
+    public ResponseEntity<Object> authenticateUser(@RequestBody Map<String, String> credentials) {
+        String email = credentials.get("email");
+        String password = credentials.get("password");
+        UserSystemModel user = (UserSystemModel) userSystemService.authenticate(email, password);
+        UserResponseModel userResponse = new UserResponseModel(user.getUserId(), user.getName(), user.getEmail(), user.getImage());
+        return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

@@ -1,7 +1,10 @@
 package com.weparty.api.Service;
 
 import com.weparty.api.Model.EventModel;
+import com.weparty.api.Model.UserResponseModel;
+import com.weparty.api.Model.UserSystemModel;
 import com.weparty.api.Repository.EventRepository;
+import com.weparty.api.Repository.UserSystemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +16,26 @@ public class EventService {
     @Autowired
     private EventRepository eventRepository;
 
+    @Autowired
+    private UserSystemRepository userSystemRepository;
+
+//    public List<EventModel> index() {
+//        return (List<EventModel>) eventRepository.findAll();
+//    }
+
     public List<EventModel> index() {
-        return (List<EventModel>) eventRepository.findAll();
+        List<EventModel> events = (List<EventModel>) eventRepository.findAll();
+
+        // Agora, para cada evento, carregue o usuário associado
+        events.forEach(event -> {
+            UserSystemModel user = userSystemRepository.findById(Math.toIntExact(event.getEventUserId())).orElse(null);
+
+            UserResponseModel userResponse = new UserResponseModel(user.getUserId(), user.getName(), user.getEmail(), user.getImage());
+
+            event.setUserResponse(userResponse);
+        });
+
+        return events;
     }
 
     public Object store(EventModel eventModel) {

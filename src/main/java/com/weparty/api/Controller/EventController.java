@@ -41,7 +41,7 @@ public class EventController {
             EventModel createdEvent = (EventModel) eventService.store(eventModel);
 
             // Create a response without the password
-            UserResponseModel userResponse = new UserResponseModel(user.getUserId(), user.getName(), user.getEmail());
+            UserResponseModel userResponse = new UserResponseModel(user.getUserId(), user.getName(), user.getEmail(), user.getImage());
             createdEvent.setUserResponse(userResponse);
 
             return createdEvent;

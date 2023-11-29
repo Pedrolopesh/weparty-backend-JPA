@@ -60,4 +60,21 @@ public class UserSystemService {
             return  "not_found";
         }
     }
+
+    public Object authenticate(String email, String password) {
+        try {
+            Optional<UserSystemModel> userOptional = userSystemRepository.findByEmailAndPassword(email, password);
+
+            if (userOptional.isPresent()) {
+                // Autenticação bem-sucedida
+                return userOptional.get();
+            } else {
+                // Usuário não encontrado ou senha incorreta
+                return "authentication_failed";
+            }
+        } catch (Exception e) {
+            // Tratamento de exceção, se necessário
+            return "error";
+        }
+    }
 }
